@@ -30,9 +30,8 @@ const SpotifyService = {
     spotifySearch(keyword) {
         return new Promise((resolve, reject) => {
             getAccessToken().then(token => {
-                console.log('token: ', token)
                 const formattedKeyword = keyword.trim().split(' ').join('%20')
-                const searchEndpoint = `https://api.spotify.com/v1/search?query=${formattedKeyword}&type=track`
+                const searchEndpoint = `https://api.spotify.com/v1/search?query=${formattedKeyword}&type=artist,track`
 
                 const searchOptions = {
                     url: searchEndpoint,
@@ -46,15 +45,17 @@ const SpotifyService = {
                         url: obj.external_urls,
                         id: obj.id,
                         images: obj.images,
-                        name: obj.name
+                        name: obj.name,
                     }))) : []
                     const tracks = jsonBody.tracks ? jsonBody.tracks.items.map((obj => ({
                         url: obj.external_urls.spotify,
                         id: obj.id,
                         artist: obj.artists[0].name,
                         album: obj.album.name,
-                        images: obj.album.images
+                        images: obj.album.images,
+                        name: obj.name,
                     }))) : []
+                    
                     const searchResults = {artists, tracks}
                     resolve(searchResults)
                 });
