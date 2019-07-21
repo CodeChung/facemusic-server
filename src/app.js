@@ -4,6 +4,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const photoRouter = require('./photos/photo-router')
+const spotifyRouter = require('./spotify/spotify-router')
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(cors())
 app.use(helmet())
 
 app.use('/api/photos', photoRouter)
+app.use('/api/music', spotifyRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')

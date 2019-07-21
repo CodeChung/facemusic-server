@@ -2,7 +2,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../../logger')
 const parseDataUri = require('parse-data-uri')
-const photoService = require('./photo-service')
+const PhotoService = require('./photo-service')
 
 
 const photoRouter = express.Router()
@@ -15,14 +15,21 @@ photoRouter
         //check for image
         if (!img) {
             logger.error('Img post request with no uri')
-            res.status(400).json({error: { message: 'No data sent with image post request'}})
+            return res.status(400).json({error: { message: 'No data sent with image post request'}})
         }
         //verify image filetype
         if (!parseDataUri(img).mimeType.startsWith('image')) {
             logger.error('Non image file submitted to post request')
-            res.status(400).json({error: { message: 'Must send image filetype'}})
+            return res.status(400).json({error: { message: 'Must send image filetype'}})
         }
-        photoService.uploadPhoto(img)
+        PhotoService.uploadPhoto(img)
+            .then(data => {
+                //we could move this into spotify service
+                if (data.error) {
+                    return res.status(400).json({error: data.error})
+                }
+                return res.json(data)
+            })
     })
 
 module.exports = photoRouter

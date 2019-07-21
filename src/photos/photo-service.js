@@ -3,6 +3,23 @@ const request = require('request')
 const faceApiEndpoint = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect?'
 
 
+
+
+//converts data uri to url we can access online
+photoToUrl = (uri) => {
+    return new Promise(function(resolve, reject) {
+        cloudinary.v2.uploader.upload(uri, { return_delete_token: 1 },
+            function(error, result) {
+                if (error) {
+                    throw new Error(error)
+                }
+                const {url, public_id} = result
+                resolve({url, public_id})
+            }
+        )
+    })
+}
+
 //sends photo url to Face API, returns emotion data json
 analyzePhoto = (photoData) => {
     return new Promise(function(resolve, reject) {
@@ -22,7 +39,6 @@ analyzePhoto = (photoData) => {
         }
         request.post(options, (error, response, body) => {
             if (error) {
-              console.log('Error: ', error);
               reject(error)
             }
             let jsonResponse = JSON.parse(body)
@@ -36,33 +52,19 @@ analyzePhoto = (photoData) => {
     })
 }
 
-//converts data uri to url we can access online
-photoToUrl = (uri) => {
-    return new Promise(function(resolve, reject) {
-        cloudinary.v2.uploader.upload(uri, { return_delete_token: 1 },
-            function(error, result) {
-                if (error) {
-                    throw new Error(error)
-                }
-                const {url, public_id} = result
-                resolve({url, public_id})
-            }
-        )
-    })
-}
-
 deletePhoto = (public_id) => {
     cloudinary.v2.uploader.destroy(public_id, function(error,result) {
         console.log(result, error) });
 }
 
-const photoService = {
+const PhotoService = {
     uploadPhoto(uri) {
-        photoToUrl(uri)
-            .then(photoData => analyzePhoto(photoData))
-            .then(res => console.log('face', res))
+        return new Promise(function(resolve, reject) {
+            resolve(photoToUrl(uri)
+            .then(photoData => analyzePhoto(photoData)))
+        })
     }
 
 }
 
-module.exports = photoService
+module.exports = PhotoService
