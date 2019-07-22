@@ -3,3 +3,30 @@
 {"message":"Img post request with no uri","level":"error"}
 {"message":"Img post request with no uri","level":"error"}
 {"message":"Img post request with no uri","level":"error"}
+{"message":"vibe post missing type header","level":"error"}
+{"message":"vibe post missing type header","level":"error"}
+{"message":"artist post missing name","level":"error"}
+{"message":"artist post missing id","level":"error"}
+{"message":"artist post missing name","level":"error"}
+{"message":"artist post missing id","level":"error"}
+{"message":"artist post missing id","level":"error"}
+{"message":"artist post missing image","level":"error"}
+{"message":"artist post missing image","level":"error"}
+{"message":"track post missing picture","level":"error"}
+{"message":"track post missing artist","level":"error"}
+{"message":"track post missing picture","level":"error"}
+{"message":"track post missing artist","level":"error"}
+{"message":"user 1's preferences updated with artist 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 42069","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 432","level":"info"}
+{"message":"user 1's preferences updated with track 123","level":"info"}

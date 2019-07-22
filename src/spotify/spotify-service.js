@@ -1,4 +1,5 @@
 const request = require('request')
+const knex = require('knex')
 
 //api token expires 3600, should i request a new one each time a perform a search or save it and only call when time is up?
 
@@ -61,9 +62,20 @@ const SpotifyService = {
                 });
             })
         })
-        
-        
     },
+    //insert user's artist preference
+    addArtist(knex, artist) {
+        return knex('artists')
+            .insert(artist)
+            .returning('*')
+            .then(artist => artist[0])
+    },
+    addTrack(knex, track) {
+        return knex('tracks')
+            .insert(track)
+            .returning('*')
+            .then(track => track[0])
+    }
 }
 
 module.exports = SpotifyService

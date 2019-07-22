@@ -3,11 +3,10 @@ CREATE TABLE tracks (
     name TEXT NOT NULL,
     img TEXT NOT NULL,
     artist TEXT NOT NULL,
-    album TEXT NOT NULL,
-    
+    album TEXT NOT NULL
 );
 
-ALTER TABLE artists
+ALTER TABLE tracks
     ADD COLUMN
         user_id INTEGER 
             REFERENCES users(id)
