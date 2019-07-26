@@ -3,11 +3,17 @@ CREATE TABLE IF NOT EXISTS entries (
     date_created TIMESTAMP NOT NULL DEFAULT now(),
     notes TEXT,
     img TEXT NOT NULL,
-    song TEXT
+    song TEXT NOT NULL
 );
 
 ALTER TABLE entries
     ADD COLUMN
         user_id INTEGER 
             REFERENCES users(id)
+            ON DELETE CASCADE NOT NULL;
+
+ALTER TABLE entries
+    ADD COLUMN
+        emotion_id INTEGER
+            REFERENCES emotions(id)
             ON DELETE CASCADE NOT NULL;

@@ -74,12 +74,23 @@ spotifyRouter
         const emotions = req.body
         if (Object.keys(emotions).length === 0) {
             logger.error(`recommendations post must include emotional data`)
-            res
+            return res
                 .status(400)
                 .json({error: {message: 'Recommendations post missing emotional data'}})
         }
         //TODO implement user_id && replace with 1
         SpotifyService.getRecommendations(req.app.get('db'), 1, emotions)
+            .then(tracks => {
+                console.log(tracks)
+                if (!tracks.length) {
+                    return res
+                        .status(400)
+                        .json({error: {message: 'Tracks not found, please try again'}})
+                }
+                res
+                    .status(200)
+                    .json(tracks)
+            })
     })
 
 module.exports = spotifyRouter

@@ -121,6 +121,8 @@ randomSeeds = (seeds) => {
 
 //convert emotion data from Face API to parameters for Spotify Recommendations API
 emotionToSpotify = (emotions) => {
+    let maxEmotion
+    let maxVal = 0
     const trackAttributes = {
         danceability: 0,
         energy: 0,
@@ -138,11 +140,14 @@ emotionToSpotify = (emotions) => {
             trackAttributes[attribute] += value
         }
         //choose random key from 
-        if (emotions[emotion] >= 0.5) {
-            const index = Math.floor(Math.random() * table.key.length)
-            trackAttributes.key = table.key[index]
+        if (emotions[emotion] >= maxVal)  {
+            maxVal = emotions[emotion]
+            maxEmotion = emotion
         }
     }
+    const keyTable = emotionTable[maxEmotion].key
+    const index = Math.floor(Math.random() * keyTable.length)
+    trackAttributes.key = keyTable[index]
     //round up mode
     trackAttributes.mode = trackAttributes.mode >= 0.5 ? 1 : 0
     return trackAttributes
@@ -225,37 +230,38 @@ const SpotifyService = {
             })
     },
     getRecommendations(knex, user_id, emotions) {
-        this.getSeeds(knex, user_id)
-            .then(results => {
-                const {artists, tracks} = results
-                const artistSeeds = randomSeeds(artists)
-                const trackSeeds = randomSeeds(tracks)
-                const trackAttributes = emotionToSpotify(emotions)
-                return formatRecommendationQuery(artistSeeds, trackSeeds, trackAttributes)
-            })
-            .then(url => {
-                getAccessToken().then(token => {
-                    const searchOptions = {
-                        url,
-                        headers: {
-                            'Authorization': `Bearer ${token}`
+        return new Promise((resolve, reject) => {
+            this.getSeeds(knex, user_id)
+                .then(results => {
+                    const {artists, tracks} = results
+                    const artistSeeds = randomSeeds(artists)
+                    const trackSeeds = randomSeeds(tracks)
+                    const trackAttributes = emotionToSpotify(emotions)
+                    return formatRecommendationQuery(artistSeeds, trackSeeds, trackAttributes)
+                })
+                .then(url => {
+                    getAccessToken().then(token => {
+                        const searchOptions = {
+                            url,
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
                         }
-                    }
-                    request(searchOptions, function (error, response, body) {
-                        const jsonBody = JSON.parse(body)
-                        console.log(jsonBody)
-                        const tracks = jsonBody.tracks ? jsonBody.tracks.map((obj => ({
-                            url: obj.external_urls.spotify,
-                            id: obj.id,
-                            artist: obj.artists[0].name,
-                            album: obj.album.name,
-                            images: obj.album.images,
-                            name: obj.name,
-                        }))) : []
-                        console.log(tracks)
+                        request(searchOptions, function (error, response, body) {
+                            const jsonBody = JSON.parse(body)
+                            const tracks = jsonBody.tracks ? jsonBody.tracks.map((obj => ({
+                                url: obj.external_urls.spotify,
+                                id: obj.id,
+                                artist: obj.artists[0].name,
+                                album: obj.album.name,
+                                images: obj.album.images,
+                                name: obj.name,
+                            }))) : []
+                            resolve(tracks)
+                        })
                     })
                 })
-            })
+        })
     }
 }
 
