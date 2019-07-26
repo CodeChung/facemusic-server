@@ -22,9 +22,13 @@ spotifyRouter
 
 spotifyRouter
     .route('/vibes/')
+    .get((req, res, next) => {
+        //TODO REFORMAT 1 WITH SPECIFIC USER IDs
+        SpotifyService.getSeeds(req.app.get('db'), 1)
+            .then(seeds => res.json(seeds))
+    })
     .post(jsonBodyParser, (req, res, next) => {
         const { type } = req.headers
-        console.log('body', req.body)
         if (!type || (type !== 'artist' && type !== 'track')) {
             logger.error(`vibe post missing type header`)
             return res
@@ -62,6 +66,20 @@ spotifyRouter
                     .status(201)
                     .json(track)
             })
+    })
+
+spotifyRouter
+    .route('/recommendations')
+    .post(jsonBodyParser, (req, res, next) => {
+        const emotions = req.body
+        if (Object.keys(emotions).length === 0) {
+            logger.error(`recommendations post must include emotional data`)
+            res
+                .status(400)
+                .json({error: {message: 'Recommendations post missing emotional data'}})
+        }
+        //TODO implement user_id && replace with 1
+        SpotifyService.getRecommendations(req.app.get('db'), 1, emotions)
     })
 
 module.exports = spotifyRouter

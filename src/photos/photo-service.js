@@ -52,6 +52,7 @@ analyzePhoto = (photoData) => {
     })
 }
 
+//delete photo url if no facial data returned from face api
 deletePhoto = (public_id) => {
     cloudinary.v2.uploader.destroy(public_id, function(error,result) {
         console.log(result, error) });
