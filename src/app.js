@@ -5,6 +5,8 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const photoRouter = require('./photos/photo-router')
 const spotifyRouter = require('./spotify/spotify-router')
+const entriesRouter = require('./entries/entries-router')
+const usersRouter = require('./users/users-router')
 
 const app = express()
 
@@ -16,6 +18,8 @@ app.use(helmet())
 
 app.use('/api/photos', photoRouter)
 app.use('/api/music', spotifyRouter)
+app.use('/api/entries', entriesRouter)
+app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')

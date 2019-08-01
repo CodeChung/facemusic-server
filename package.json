@@ -15,6 +15,7 @@
   "author": "Harry Chung",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
@@ -23,6 +24,7 @@
     "knex": "^0.19.0",
     "morgan": "^1.9.1",
     "parse-data-uri": "^0.2.0",
+    "path": "^0.12.7",
     "pg": "^7.11.0",
     "request": "^2.88.0",
     "winston": "^3.2.1",

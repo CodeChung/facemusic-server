@@ -1,6 +1,6 @@
 const express = require('express')
 const xss = require('xss')
-const logger = require('logger')
+const logger = require('../../logger')
 const entriesService = require('./entries-service')
 
 const entriesRouter = express.Router()
@@ -19,3 +19,5 @@ entriesRouter
             }
         }
     })
+
+module.exports = entriesRouter
