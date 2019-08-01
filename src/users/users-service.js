@@ -4,10 +4,13 @@ const bcrypt = require('bcryptjs')
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/
 
 const UsersService = {
-    hasUserWithUserName(db, username) {
+    getUserWithUserName(db, username) {
         return db('users')
-            .where({ username })
+            .where({username})
             .first()
+    },
+    hasUserWithUserName(db, username) {
+        return this.getUserWithUserName(db, username)
             .then(user => !!user)
     },
     insertUser(db, newUser) {
@@ -23,7 +26,7 @@ const UsersService = {
         }
         if (password.length > 72) {
             return 'Password must be less than 72 characters'
-        }
+        }   
         if (password.startsWith(' ') || password.endsWith(' ')) {
             return 'Password must not start or end with empty spaces'
         }
