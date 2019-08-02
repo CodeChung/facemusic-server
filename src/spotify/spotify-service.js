@@ -45,9 +45,9 @@ const emotionTable = {
         key: [0, 9, 10]
     },
     neutral: {
-        danceability: 0,
-        energy: 0.3,
-        loudness: -50,
+        danceability: 0.5,
+        energy: 0.5,
+        loudness: -40,
         mode: 1,
         valence: 0.5,
         key: [0,1,2,3,4,5,6,7,8,9,10,11]
@@ -65,7 +65,7 @@ const emotionTable = {
         energy: 1,
         loudness: 0,
         mode: 1,
-        valence: 0.6,
+        valence: 0.8,
         key: [0,1,2,3,4,5,6,7,8,9,10,11]
     }
 }
@@ -237,6 +237,7 @@ const SpotifyService = {
                     const artistSeeds = randomSeeds(artists)
                     const trackSeeds = randomSeeds(tracks)
                     const trackAttributes = emotionToSpotify(emotions)
+                    console.log(trackAttributes)
                     return formatRecommendationQuery(artistSeeds, trackSeeds, trackAttributes)
                 })
                 .then(url => {

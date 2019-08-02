@@ -2,6 +2,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../../logger')
 const SpotifyService = require('./spotify-service')
+const { requireAuth } = require('../middleware/auth')
 
 const spotifyRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -22,13 +23,16 @@ spotifyRouter
 
 spotifyRouter
     .route('/vibes/')
+    .all(requireAuth)
     .get((req, res, next) => {
-        //TODO REFORMAT 1 WITH SPECIFIC USER IDs
-        SpotifyService.getSeeds(req.app.get('db'), 1)
+        SpotifyService.getSeeds(req.app.get('db'), req.user.id)
             .then(seeds => res.json(seeds))
     })
     .post(jsonBodyParser, (req, res, next) => {
         const { type } = req.headers
+        const postBody = req.body
+        postBody.user_id = req.user.id
+
         if (!type || (type !== 'artist' && type !== 'track')) {
             logger.error(`vibe post missing type header`)
             return res
@@ -43,7 +47,7 @@ spotifyRouter
                         .json({error: {message: `Artist vibe body missing ${key}`}})
                 }
             }
-            SpotifyService.addArtist(req.app.get('db'), req.body)
+            SpotifyService.addArtist(req.app.get('db'), postBody)
                 .then(artist => {
                     logger.info(`user ${artist.user_id}'s preferences updated with artist ${artist.id}`)
                     res.status(201).json(artist)
@@ -58,30 +62,32 @@ spotifyRouter
                         .json({error: {message: `Track vibe body missing ${key}`}})
                 }
             }
+            SpotifyService.addTrack(req.app.get('db'), postBody)
+                .then(track => {
+                    logger.info(`user ${track.user_id}'s preferences updated with track ${track.id}`)
+                    res
+                        .status(201)
+                        .json(track)
+                })
         }
-        SpotifyService.addTrack(req.app.get('db'), req.body)
-            .then(track => {
-                logger.info(`user ${track.user_id}'s preferences updated with track ${track.id}`)
-                res
-                    .status(201)
-                    .json(track)
-            })
+        
     })
 
 spotifyRouter
     .route('/recommendations')
+    .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
         const emotions = req.body
+        const userId = req.user.id
         if (Object.keys(emotions).length === 0) {
             logger.error(`recommendations post must include emotional data`)
             return res
                 .status(400)
                 .json({error: {message: 'Recommendations post missing emotional data'}})
         }
-        //TODO implement user_id && replace with 1
-        SpotifyService.getRecommendations(req.app.get('db'), 1, emotions)
+    
+        SpotifyService.getRecommendations(req.app.get('db'), userId, emotions)
             .then(tracks => {
-                console.log(tracks)
                 if (!tracks.length) {
                     return res
                         .status(400)
