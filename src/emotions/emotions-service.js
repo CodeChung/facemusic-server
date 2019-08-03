@@ -1,6 +1,6 @@
 const emotionsService = {
     saveEmotions(knex, emotions) {
-        knex('emotions')
+        return knex('emotions')
             .insert(emotions)
             .returning('id')
             .then(emotionId => emotionId[0])

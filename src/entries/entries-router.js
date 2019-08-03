@@ -2,15 +2,19 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../../logger')
 const entriesService = require('./entries-service')
+const { requireAuth } = require('../middleware/auth')
 
 const entriesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 entriesRouter
-    .route('/')
+    .route('/new')
+    .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
-        // TODO figure out where to get user_id; may want to take it out of req.body
-        for (const key of ['notes', 'img', 'song', 'user_id']) {
+        const userId = req.user.id
+        const entry = req.body
+
+        for (const key of ['img', 'song', 'emotions']) {
             if (!req.body[key]) {
                 logger.error(`Entry post request missing ${key}`)
                 return res
@@ -18,6 +22,25 @@ entriesRouter
                     .json({error: {message: `Must include ${key} in request`}})
             }
         }
+
+        entriesService.saveEntry(req.app.get('db'), entry, userId)
     })
+
+entriesRouter
+    .route('/')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const userId = req.user.id
+
+        entriesService.getEntries(req.app.get('db'), userId)
+            .then(entries => {
+                if (entries.error) {
+                    return res.status(400).json({error: entries.error})
+                }
+                
+                return res.json(entries)
+            })
+    })
+    
 
 module.exports = entriesRouter

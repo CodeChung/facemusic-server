@@ -47,7 +47,13 @@ analyzePhoto = (photoData) => {
                 deletePhoto(photoData.public_id)
                 resolve({error: {message: 'Face is not recognized, please try again'}})
             }
-            resolve(jsonResponse[0])
+
+            //pass object with facial attributes and emotion attributes
+            const photoWithEmotion = {
+                ...jsonResponse[0],
+                ...photoData
+            }
+            resolve(photoWithEmotion)
         })
     })
 }

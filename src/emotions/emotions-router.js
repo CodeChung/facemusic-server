@@ -20,5 +20,11 @@ emotionsRouter
             }
         }
         emotionsService.saveEmotions(req.app.get('db'), req.body)
-            .then(res => console.log(res))
+            .then(res => {
+                delete res.user_id
+                delete res.id
+                console.log(res)
+            })
     })
+
+    //TODO i don't think we actually use this file. maybe take out?

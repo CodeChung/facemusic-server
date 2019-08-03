@@ -1,5 +1,4 @@
 const request = require('request')
-const knex = require('knex')
 
 //api token expires 3600, should i request a new one each time a perform a search or save it and only call when time is up?
 

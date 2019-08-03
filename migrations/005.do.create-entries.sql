@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS entries (
     date_created TIMESTAMP NOT NULL DEFAULT now(),
     notes TEXT,
     img TEXT NOT NULL,
-    song TEXT NOT NULL
+    song jsonb
 );
 
 ALTER TABLE entries

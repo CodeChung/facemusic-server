@@ -12,7 +12,7 @@ photoRouter
     .route('/')
     .post(jsonBodyParser, (req, res, next) => {
         const { img } = req.body
-        //check for image
+        //check for image uri data
         if (!img) {
             logger.error('Img post request with no uri')
             return res.status(400).json({error: { message: 'No data sent with image post request'}})
@@ -24,7 +24,6 @@ photoRouter
         }
         PhotoService.uploadPhoto(img)
             .then(data => {
-                //we could move this into spotify service
                 if (data.error) {
                     return res.status(400).json({error: data.error})
                 }
