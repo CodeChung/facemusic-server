@@ -67,3 +67,39 @@
 {"message":"user 2's preferences updated with artist 3GLXuBAGaatiaRS3NmGpXO","level":"info"}
 {"message":"user 2's preferences updated with artist 77tT1kLj6mCWtFNqiOmP9H","level":"info"}
 {"message":"Entry post request missing notes","level":"error"}
+{"message":"user 1's preferences updated with track 7vgTNTaEz3CsBZ1N4YQalM","level":"info"}
+{"message":"user 2's preferences updated with track 7vgTNTaEz3CsBZ1N4YQalM","level":"info"}
+{"message":"user 2's preferences updated with track 7GRTrWsP3yo2Fx8umJfA1X","level":"info"}
+{"message":"user 2's preferences updated with artist 1w5Kfo2jwwIPruYS2UWh56","level":"info"}
+{"message":"user 2's preferences updated with track 4JehYebiI9JE8sR8MisGVb","level":"info"}
+{"message":"user 2's preferences updated with artist 5Dl3HXZjG6ZOWT5cV375lk","level":"info"}
+{"message":"user 2's preferences updated with artist 21E3waRsmPlU7jZsS13rcj","level":"info"}
+{"message":"user 2's preferences updated with artist 6vWDO969PvNqNYHIOW5v0m","level":"info"}
+{"message":"user 2's preferences updated with artist 02kJSzxNuaWGqwubyUba0Z","level":"info"}
+{"message":"user 2's preferences updated with artist 5rEyptwUaQ8pDU4Nw7YhMV","level":"info"}
+{"message":"user 2's preferences updated with artist 2gHlXnCMyxwPv2MS1JvfGS","level":"info"}
+{"message":"user 2's preferences updated with artist 7lfJZtIccBaUDTk4y75oP5","level":"info"}
+{"message":"user 2 deleted artist 7lfJZtIccBaUDTk4y75oP5","level":"info"}
+{"message":"user 2 deleted artist 5rEyptwUaQ8pDU4Nw7YhMV","level":"info"}
+{"message":"user 2's preferences updated with artist 7lfJZtIccBaUDTk4y75oP5","level":"info"}
+{"message":"user 2's preferences updated with artist 5rEyptwUaQ8pDU4Nw7YhMV","level":"info"}
+{"message":"user 2's preferences updated with artist 2gHlXnCMyxwPv2MS1JvfGS","level":"info"}
+{"message":"user 2 deleted artist 2gHlXnCMyxwPv2MS1JvfGS","level":"info"}
+{"message":"user 2 deleted artist 5rEyptwUaQ8pDU4Nw7YhMV","level":"info"}
+{"message":"user 2 deleted track 7GRTrWsP3yo2Fx8umJfA1X","level":"info"}
+{"message":"user 2 deleted track 7vgTNTaEz3CsBZ1N4YQalM","level":"info"}
+{"message":"user 2's preferences updated with track 7vgTNTaEz3CsBZ1N4YQalM","level":"info"}
+{"message":"user 2's preferences updated with track 7GRTrWsP3yo2Fx8umJfA1X","level":"info"}
+{"message":"user 2's preferences updated with track 6wDviYDtmSDZ0S6TVMM9Vc","level":"info"}
+{"message":"user 2's preferences updated with track 01gwPP2h3ajRnqiIphUtR7","level":"info"}
+{"message":"user 2's preferences updated with track 05vh32d4pXbYfBrM6S3H2f","level":"info"}
+{"message":"user 2's preferences updated with track 2dYdai0GywuwYq6blSwDBV","level":"info"}
+{"message":"user 2's preferences updated with track 5SdB3onMcO9ZBoKrdvCqhR","level":"info"}
+{"message":"user 2's preferences updated with track 6jazXlq9nDL68GUIJur1SY","level":"info"}
+{"message":"user 2 deleted track 01gwPP2h3ajRnqiIphUtR7","level":"info"}
+{"message":"user 2 deleted track 2dYdai0GywuwYq6blSwDBV","level":"info"}
+{"message":"user 2 deleted track 6jazXlq9nDL68GUIJur1SY","level":"info"}
+{"message":"user 2 deleted track 5SdB3onMcO9ZBoKrdvCqhR","level":"info"}
+{"message":"user 2 deleted artist 7lfJZtIccBaUDTk4y75oP5","level":"info"}
+{"message":"user 2 deleted track 6wDviYDtmSDZ0S6TVMM9Vc","level":"info"}
+{"message":"user 2 deleted track 05vh32d4pXbYfBrM6S3H2f","level":"info"}

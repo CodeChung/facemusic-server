@@ -40,6 +40,7 @@ spotifyRouter
                 .json({error: {message: `vibe post missing type header`}})
         }
         if (type === 'artist') {
+            const tableType = 'artists'
             for (const key of ['name', 'id', 'img', 'user_id']) {
                 if (!req.body[key]) {
                     logger.error(`artist post missing ${key}`)
@@ -47,13 +48,14 @@ spotifyRouter
                         .json({error: {message: `Artist vibe body missing ${key}`}})
                 }
             }
-            SpotifyService.addArtist(req.app.get('db'), postBody)
+            SpotifyService.addSeed(req.app.get('db'), tableType, postBody)
                 .then(artist => {
                     logger.info(`user ${artist.user_id}'s preferences updated with artist ${artist.id}`)
                     res.status(201).json(artist)
                 })
         }
         if (type === 'track') {
+            const tableType = 'tracks'
             for (const key of ['name', 'id', 'img', 'artist', 'album', 'user_id']) {
                 if (!req.body[key]) {
                     logger.error(`track post missing ${key}`)
@@ -62,7 +64,7 @@ spotifyRouter
                         .json({error: {message: `Track vibe body missing ${key}`}})
                 }
             }
-            SpotifyService.addTrack(req.app.get('db'), postBody)
+            SpotifyService.addSeed(req.app.get('db'), tableType,postBody)
                 .then(track => {
                     logger.info(`user ${track.user_id}'s preferences updated with track ${track.id}`)
                     res
@@ -70,7 +72,33 @@ spotifyRouter
                         .json(track)
                 })
         }
-        
+    })
+    .delete(jsonBodyParser, (req, res, next) => {
+        const { type } = req.headers
+        const { id } = req.body
+
+        if (!type || (type !== 'artist' && type !== 'track')) {
+            logger.error(`vibe post missing type header`)
+            return res
+                .status(400)
+                .json({error: {message: `vibe post missing type header`}})
+        }
+        if (type === 'artist') {
+            const tableType = 'artists'
+            SpotifyService.deleteSeed(req.app.get('db'), tableType, id, req.user.id)
+                .then(seed => {
+                    logger.info(`user ${req.user.id} deleted artist ${id}`)
+                    res.status(204)
+                })
+        }
+        if (type === 'track') {
+            const tableType = 'tracks'
+            SpotifyService.deleteSeed(req.app.get('db'), tableType, id, req.user.id)
+                .then(seed => {
+                    logger.info(`user ${req.user.id} deleted track ${id}`)
+                    res.status(204)
+                })
+        }
     })
 
 spotifyRouter

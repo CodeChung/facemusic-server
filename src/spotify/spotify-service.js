@@ -199,18 +199,18 @@ const SpotifyService = {
             })
         })
     },
-    //insert user's artist preference
-    addArtist(knex, artist) {
-        return knex('artists')
-            .insert(artist)
+    addSeed(knex, table, seed) {
+        return knex(table)
+            .insert(seed)
             .returning('*')
-            .then(artist => artist[0])
+            .then(seed => seed[0])
     },
-    addTrack(knex, track) {
-        return knex('tracks')
-            .insert(track)
+    deleteSeed(knex, table, id, user_id) {
+        return knex(table)
+            .where({id, user_id})
+            .del()
             .returning('*')
-            .then(track => track[0])
+            .then(seed => seed[0])
     },
     //search artists table for seeds with matching id
     //then do the same for tracks and return both

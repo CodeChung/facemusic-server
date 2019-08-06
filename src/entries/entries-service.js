@@ -26,6 +26,17 @@ const entriesService = {
             .leftJoin('emotions', 'entries.emotion_id', 'emotions.id')
             .where({user_id})
             .returning('*')
+            .then(entries => {
+                const entriesByDate = {}
+
+                //hash table with date-string (day only) as key; value == entry
+                entries.forEach(entry => {
+                    const date = new Date(entry.date_created).toString().slice(0, 15)
+
+                    entriesByDate[date] = entry
+                })
+                return entriesByDate
+            })
     }
 }
 
