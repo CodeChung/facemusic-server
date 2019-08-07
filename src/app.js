@@ -22,7 +22,7 @@ app.use('/api/entries', entriesRouter)
 app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
-  res.send('Hello, world!')
+  res.send('Howdy')
 })
 
 app.use(function errorHandler(error, req, res, next) {
