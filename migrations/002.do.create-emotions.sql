@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS emotions (
     neutral NUMERIC(4,3),
     sadness NUMERIC(4,3),
     surprise NUMERIC(4,3)
-)
+);
