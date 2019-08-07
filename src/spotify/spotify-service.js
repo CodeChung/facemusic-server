@@ -233,18 +233,14 @@ const SpotifyService = {
         return new Promise((resolve, reject) => {
             this.getSeeds(knex, user_id)
                 .then(results => {
-                    console.log('RESULTS', results)
                     const {artists, tracks} = results
                     const artistSeeds = randomSeeds(artists)
                     const trackSeeds = randomSeeds(tracks)
                     const trackAttributes = emotionToSpotify(emotions)
-                    console.log(trackAttributes)
                     return formatRecommendationQuery(artistSeeds, trackSeeds, trackAttributes)
                 })
                 .then(url => {
                     getAccessToken().then(token => {
-                        console.log(url)
-                        console.log('TOKEN', token)
                         const searchOptions = {
                             url,
                             headers: {

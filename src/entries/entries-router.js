@@ -28,7 +28,6 @@ entriesRouter
                 if (entry.error) {
                     return res.status(400).json({error: entries.error})
                 }
-                console.log(entry)
                 return res.json(entry)
             })
     })
@@ -40,7 +39,7 @@ entriesRouter
         // 
         const userId = req.user.id
         //TODO: consider switching this to search by month  https://stackoverflow.com/questions/51542703/knex-select-rows-that-are-in-certain-date-range
-        entriesService.getEntries(req.app.get('db'), 2)
+        entriesService.getEntries(req.app.get('db'), userId)
             .then(entries => {
                 if (entries.error) {
                     return res.status(400).json({error: entries.error})
