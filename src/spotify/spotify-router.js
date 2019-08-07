@@ -116,6 +116,7 @@ spotifyRouter
     
         SpotifyService.getRecommendations(req.app.get('db'), userId, emotions)
             .then(tracks => {
+                console.log(tracks)
                 if (!tracks.length) {
                     return res
                         .status(400)

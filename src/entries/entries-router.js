@@ -24,6 +24,13 @@ entriesRouter
         }
 
         entriesService.saveEntry(req.app.get('db'), entry, userId)
+            .then(entry => {
+                if (entry.error) {
+                    return res.status(400).json({error: entries.error})
+                }
+                console.log(entry)
+                return res.json(entry)
+            })
     })
 
 entriesRouter

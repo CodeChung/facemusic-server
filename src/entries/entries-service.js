@@ -3,7 +3,7 @@ const emotionsService = require('../emotions/emotions-service')
 const entriesService = {
     saveEntry(knex, entry, user_id ) {
         const emotions = entry.emotions
-        emotionsService.saveEmotions(knex, emotions)
+        return emotionsService.saveEmotions(knex, emotions)
             .then(emotion_id => {
                 const { notes, img, song } = entry
                 
@@ -18,7 +18,7 @@ const entriesService = {
                 return knex('entries')
                     .insert(entryBody)
                     .returning('*')
-                    .then(res => console.log(res))
+                    .then(res => res[0])
             })
     },
     getEntries(knex, user_id) {

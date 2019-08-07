@@ -9,7 +9,7 @@ const emotionTable = {
         loudness: 0,
         mode: 1,
         valence: 0,
-        key: [11]
+        key: [0,1,2,3,4,5,6,7,8,9,10,11]
     },
     contempt: {
         danceability: 0,
@@ -17,7 +17,7 @@ const emotionTable = {
         loudness: -30,
         mode: 0,
         valence: 0,
-        key: [7, 10]
+        key: [0,1,2,3,4,5,6,7,8,9,10,11]
     },
     disgust: {
         danceability: 0.3,
@@ -25,7 +25,7 @@ const emotionTable = {
         loudness: -40,
         mode: 0,
         valence: 0,
-        key: [2, 6]
+        key: [0,1,2,3,4,5,6,7,8,9,10,11]
     },
     fear: {
         danceability: 0.7,
@@ -33,7 +33,7 @@ const emotionTable = {
         loudness: -20,
         mode: 0,
         valence: 0,
-        key: [3]
+        key: [0,1,2,3,4,5,6,7,8,9,10,11]
     },
     happiness: {
         danceability: 1,
@@ -41,7 +41,7 @@ const emotionTable = {
         loudness: 0,
         mode: 1,
         valence: 1,
-        key: [0, 9, 10]
+        key: [0,1,2,3,4,5,6,7,8,9,10,11]
     },
     neutral: {
         danceability: 0.5,
@@ -128,7 +128,6 @@ emotionToSpotify = (emotions) => {
         loudness: 0,
         mode: 0,
         valence: 0,
-        key: []
     }
     //loop through each emotion and add weighted value of attributes
     for (const emotion of Object.keys(emotions)) {
@@ -146,13 +145,15 @@ emotionToSpotify = (emotions) => {
     }
     const keyTable = emotionTable[maxEmotion].key
     const index = Math.floor(Math.random() * keyTable.length)
-    trackAttributes.key = keyTable[index]
+    // had to comment out key bc no matches with recommendations
+    delete trackAttributes.key
     //round up mode
     trackAttributes.mode = trackAttributes.mode >= 0.5 ? 1 : 0
     return trackAttributes
 }
 
 formatRecommendationQuery = (artists, tracks, attributes) => {
+    console.log(artists, tracks)
     let endpoint = 'https://api.spotify.com/v1/recommendations?'
     endpoint += `limit=5&`
     endpoint += `seed_artists=${artists}&`
@@ -232,6 +233,7 @@ const SpotifyService = {
         return new Promise((resolve, reject) => {
             this.getSeeds(knex, user_id)
                 .then(results => {
+                    console.log('RESULTS', results)
                     const {artists, tracks} = results
                     const artistSeeds = randomSeeds(artists)
                     const trackSeeds = randomSeeds(tracks)
@@ -241,6 +243,8 @@ const SpotifyService = {
                 })
                 .then(url => {
                     getAccessToken().then(token => {
+                        console.log(url)
+                        console.log('TOKEN', token)
                         const searchOptions = {
                             url,
                             headers: {
@@ -249,6 +253,7 @@ const SpotifyService = {
                         }
                         request(searchOptions, function (error, response, body) {
                             const jsonBody = JSON.parse(body)
+                            console.log(jsonBody)
                             const tracks = jsonBody.tracks ? jsonBody.tracks.map((obj => ({
                                 url: obj.external_urls.spotify,
                                 id: obj.id,

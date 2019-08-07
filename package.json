@@ -1,5 +1,5 @@
 {
-  "name": "face-music",
+  "name": "facejams",
   "version": "0.0.1",
   "description": "",
   "main": "src/server.js",
@@ -8,10 +8,14 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
+    "migrate-production": "postgrator --config postgrator-production-config.js",
     "predeploy": "npm audit",
     "deploy": "git push heroku master"
   },
   "keywords": [],
+  "engines": {
+    "node": "10.15.3"
+  },
   "author": "Harry Chung",
   "license": "MIT",
   "dependencies": {
