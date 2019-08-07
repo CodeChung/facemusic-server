@@ -194,7 +194,7 @@ const SpotifyService = {
                         name: obj.name,
                     }))) : []
                     
-                    const searchResults = {artists, tracks}
+                    const searchResults = {artists, tracks, token, searchEndpoint}
                     resolve(searchResults)
                 });
             })
