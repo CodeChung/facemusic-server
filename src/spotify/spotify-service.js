@@ -193,7 +193,7 @@ const SpotifyService = {
                         images: obj.album.images,
                         name: obj.name,
                     }))) : []
-                    
+                    // TODO!! get the token and searchEndpoint outta here
                     const searchResults = {artists, tracks, token, searchEndpoint}
                     resolve(searchResults)
                 });
@@ -241,12 +241,14 @@ const SpotifyService = {
                 })
                 .then(url => {
                     getAccessToken().then(token => {
+
                         const searchOptions = {
                             url,
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
                         }
+                        console.log(searchOptions)
                         request(searchOptions, function (error, response, body) {
                             const jsonBody = JSON.parse(body)
                             console.log(jsonBody)
