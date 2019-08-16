@@ -44,7 +44,7 @@ spotifyRouter
             for (const key of ['name', 'id', 'img', 'user_id']) {
                 if (!req.body[key]) {
                     logger.error(`artist post missing ${key}`)
-                    res.status(400)
+                    return res.status(400)
                         .json({error: {message: `Artist vibe body missing ${key}`}})
                 }
             }
@@ -59,7 +59,7 @@ spotifyRouter
             for (const key of ['name', 'id', 'img', 'artist', 'album', 'user_id']) {
                 if (!req.body[key]) {
                     logger.error(`track post missing ${key}`)
-                    res
+                    return res
                         .status(400)
                         .json({error: {message: `Track vibe body missing ${key}`}})
                 }
