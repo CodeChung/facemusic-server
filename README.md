@@ -18,8 +18,8 @@ FaceJams is a React application that allows users to find musical recommendation
 Clone the repository and download dependencies.
 
 ```
-$ git clone https://github.com/CodeChung/facemusic-client.git
-$ cd facemusic-client
+$ git clone https://github.com/CodeChung/facemusic-server.git
+$ cd facemusic-server
 $ npm install
 
 ```
