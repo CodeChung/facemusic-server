@@ -1,26 +1,45 @@
-# Express Boilerplate!
+# [FaceJams](https://codechung-bookmarks-app.now.sh/)
+## Introduction
+FaceJams is a React application that allows users to find musical recommendations based on the emotions depicted in their faces. 
 
-This is a boilerplate project used for starting new projects!
+![enter image description here](https://snipboard.io/XwaFKy.jpg)
 
-## How do set up?
+**How it works**
+1. Add your musical preferences
+![enter image description here](https://snipboard.io/ZkzQo5.jpg)
+2. Take a picture
+![enter image description here](https://snipboard.io/f4kHK3.jpg)
+3. Save songs that reflect your mood
+![enter image description here](https://snipboard.io/uPQ9a2.jpg)
+# Getting Started
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+### Installing
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Clone the repository and download dependencies.
 
-## Scripts
+```
+$ git clone https://github.com/CodeChung/facemusic-client.git
+$ cd facemusic-client
+$ npm install
 
-Start the application `npm start`
+```
+This app is dependent on Microsoft Face API and Spotify API.
 
-Start nodemon for the application `npm run dev`
+### Launching
 
-Run the tests in watch mode `npm test`
+Start the development server.
 
-## Deploying
+```
+$ npm run dev
 
-When your new project is ready for deployment, add a new heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+```
+
+This will automatically open a new browser window with the project.
+
+### Testing
+
+Run tests with Jest and Enzyme.
+
+```
+$ npm run test
+```
