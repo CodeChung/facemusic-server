@@ -1,6 +1,6 @@
 const emotionsService = require('../emotions/emotions-service')
 
-const entriesService = {
+const EntriesService = {
     saveEntry(knex, entry, user_id ) {
         const emotions = entry.emotions
         return emotionsService.saveEmotions(knex, emotions)
@@ -37,7 +37,12 @@ const entriesService = {
                 })
                 return entriesByDate
             })
+    },
+    deleteEntry(knex, user_id, entry_id) {
+        return knex('entries')
+            .where({ user_id })
+            .where('id', entry_id)
     }
 }
 
-module.exports = entriesService
+module.exports = EntriesService

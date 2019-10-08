@@ -1,7 +1,7 @@
 const express = require('express')
 const xss = require('xss')
 const logger = require('../../logger')
-const entriesService = require('./entries-service')
+const EntriesService = require('./entries-service')
 const { requireAuth } = require('../middleware/auth')
 
 const entriesRouter = express.Router()
@@ -23,7 +23,7 @@ entriesRouter
             }
         }
 
-        entriesService.saveEntry(req.app.get('db'), entry, userId)
+        EntriesService.saveEntry(req.app.get('db'), entry, userId)
             .then(entry => {
                 if (entry.error) {
                     return res.status(400).json({error: entries.error})
@@ -36,10 +36,8 @@ entriesRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        // 
         const userId = req.user.id
-        //TODO: consider switching this to search by month  https://stackoverflow.com/questions/51542703/knex-select-rows-that-are-in-certain-date-range
-        entriesService.getEntries(req.app.get('db'), userId)
+        EntriesService.getEntries(req.app.get('db'), userId)
             .then(entries => {
                 if (entries.error) {
                     return res.status(400).json({error: entries.error})
@@ -49,5 +47,19 @@ entriesRouter
             })
     })
     
+entriesRouter
+    .route('/:entryId')
+    .all(requireAuth)
+    .delete((req, res, next) => {
+        const userId = req.user.id
+        const { entryId } = req.params
+        EntriesService.deleteEntry(req.app.get('db'), userId, entryId)
+            .then(deletedEntry => {
+                if (deletedEntry > 0) {
+                    return res.status(304).end()
+                }
+                return res.status(400).json({ error: 'Did not delete' })
+            })
+    })
 
 module.exports = entriesRouter
