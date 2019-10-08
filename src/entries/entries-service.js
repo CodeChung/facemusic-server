@@ -42,6 +42,7 @@ const EntriesService = {
         return knex('entries')
             .where({ user_id })
             .where('id', entry_id)
+            .del()
     }
 }
 
