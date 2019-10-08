@@ -21,11 +21,6 @@ usersRouter
             }
         }
 
-        // const passwordError = UsersService.validatePassword(password)
-        // if (passwordError) {
-        //     return res.status(400).json({ error: passwordError })
-        // }
-
         UsersService.hasUserWithUserName(
             req.app.get('db'),
             user_name

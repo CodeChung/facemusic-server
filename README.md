@@ -43,3 +43,41 @@ Run tests with Jest and Enzyme.
 ```
 $ npm run test
 ```
+
+
+# FaceJams API (https://hc9825-goala-app.now.sh)
+## Required:
+- Authorization: Bearer {ApiToken}
+## Endpoints:
+### /api/entries
+- `GET` - gets entries that match user id
+- `POST` - creates new entry
+        - **body**: `{ img: (img link), song,(Spotify song object), emotions: (Face API emotions object) }` 
+### /api/photos
+- `POST` - sends photo data uri and gets back a link
+        - **body**: `{ img: (data uri) }` 
+### /api/spotify
+- /search/:keyword `GET` - returns Spotify songs and artists based on keyword
+- /vibes `GET` - returns user specific vibes
+- /vibes `POST` - post a user specific vibe
+        - **header**: `{ type: 'artist' || 'track' }`
+        - **body**: `{ name" (string), img: (url), artist: (string), album: (string) }`
+- /vibes `DELETE` - delete a user specific vibe
+        - **header**: `{ type: 'artist' || 'track' }`
+        - **body**: `{ name" (string), img: (url), artist: (string), album: (string) }`
+- /recommendations `POST` - Gets an array of Spotify Recommendations based on the emotions object
+        - **body**: `{ Face API emotions object }`
+### /api/users
+- /login `POST` - Creates a new user
+        - **body**: `{ user_name: (string), password: (string)}`
+- /register `POST` - Creates a new user
+        - **body**: `{ user_name: (string), password: (string)}`
+
+
+## Technologies Used:
+* React
+* Node.js
+* Postgres
+* HTML5
+* CSS3
+* JWT Authentication
