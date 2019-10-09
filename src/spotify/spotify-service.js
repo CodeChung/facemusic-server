@@ -192,7 +192,6 @@ const SpotifyService = {
                         images: obj.album.images,
                         name: obj.name,
                     }))) : []
-                    // TODO!! get the token and searchEndpoint outta here
                     const searchResults = {artists, tracks, token, searchEndpoint}
                     resolve(searchResults)
                 });
