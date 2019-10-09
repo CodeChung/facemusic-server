@@ -153,7 +153,6 @@ emotionToSpotify = (emotions) => {
 }
 
 formatRecommendationQuery = (artists, tracks, attributes) => {
-    console.log(artists, tracks)
     let endpoint = 'https://api.spotify.com/v1/recommendations?'
     endpoint += `limit=5&`
     endpoint += `seed_artists=${artists}&`
@@ -248,10 +247,8 @@ const SpotifyService = {
                                 'Authorization': `Bearer ${token}`
                             }
                         }
-                        console.log(searchOptions)
                         request(searchOptions, function (error, response, body) {
                             const jsonBody = JSON.parse(body)
-                            console.log(jsonBody)
                             const tracks = jsonBody.tracks ? jsonBody.tracks.map((obj => ({
                                 url: obj.external_urls.spotify,
                                 id: obj.id,
