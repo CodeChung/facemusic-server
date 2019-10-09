@@ -76,18 +76,118 @@ function makeArtistsArray() {
     ]
 }
 
+function makeEmotionsArray() {
+    return [
+        {
+            anger: .322,
+            contempt: .322,
+            disgust: .322,
+            fear: .322,
+            happiness: .322,
+            neutral: .322,
+            sadness: .322,
+            surprise: .322,
+        },
+        {
+            anger: .212,
+            contempt: .522,
+            disgust: .822,
+            fear: .322,
+            happiness: .322,
+            neutral: .322,
+            sadness: .322,
+            surprise: .322,
+        },
+        {
+            anger: .122,
+            contempt: .322,
+            disgust: .322,
+            fear: .322,
+            happiness: .322,
+            neutral: .322,
+            sadness: .322,
+            surprise: .322,
+        },
+        {
+            anger: .022,
+            contempt: .322,
+            disgust: .322,
+            fear: .322,
+            happiness: .322,
+            neutral: .322,
+            sadness: .322,
+            surprise: .322,
+        },
+        {
+            anger: .822,
+            contempt: .322,
+            disgust: .322,
+            fear: .322,
+            happiness: .322,
+            neutral: .322,
+            sadness: .322,
+            surprise: .322,
+        }
+    ]
+}
+
+function makeEntriesArray() {
+    return [
+        {
+            id: 1,
+            date_created: new Date(),
+            notes: 'Today was a good day',
+            img: 'img.com',
+            song: {artist: 'Abba', title: 'Abba', img: 'src.jpg'},
+            user_id: 1,
+            emotion_id: 1,
+        },
+        {
+            id: 2,
+            date_created: new Date(),
+            notes: 'Today was a great day',
+            img: 'img.com',
+            song: {artist: 'Acca', title: 'Acca', img: 'src.jpg'},
+            user_id: 2,
+            emotion_id: 2,
+        },
+        {
+            id: 3,
+            date_created: new Date(),
+            notes: 'Today was a bad day',
+            img: 'img.com',
+            song: {artist: 'Adda', title: 'Adda', img: 'src.jpg'},
+            user_id: 1,
+            emotion_id: 3,
+        },
+        {
+            id: 4,
+            date_created: new Date(),
+            notes: 'Today was a good day',
+            img: 'img.com',
+            song: {artist: 'Abeea', title: 'Aeea', img: 'src.jpg', emotions: {}},
+            user_id: 1,
+            emotion_id: 4,
+        }
+    ]
+}
+
 function makeFixtures() {
     const testUsers = makeUsersArray()
     const testTracks = makeTracksArray()
     const testArtists = makeArtistsArray()
+    const testEntries = makeEntriesArray()
+    const testEmotions = makeEmotionsArray()
 
-    return { testUsers, testTracks, testArtists }
+    return { testUsers, testTracks, testArtists, testEntries, testEmotions }
 }
 
 function cleanTables(db) {
     return db.raw(
         `TRUNCATE
-            users RESTART IDENTITY CASCADE
+            users RESTART IDENTITY CASCADE;
+        TRUNCATE
+            emotions RESTART IDENTITY CASCADE;
         `
     )
 }
@@ -100,6 +200,18 @@ function seedUsers(db, users) {
     return db.into('users').insert(preppedUsers)
 }
 
+function seedEmotions(db, emotions) {
+    return db.into('emotions').insert(emotions)
+        .returning('*')
+        .then(res => res)
+}
+
+function seedEntries(db, entries) {
+    return db.into('entries').insert(entries)
+        .returning('*')
+        .then(res => res)
+}
+
 function seedArtists(db, artists) {
     return db.into('artists').insert(artists)
         .returning('*')
@@ -108,7 +220,7 @@ function seedArtists(db, artists) {
 
 function seedTracks(db, tracks) {
     return db.into('tracks').insert(tracks)
-    .returning('*')
+        .returning('*')
         .then(res => res)
 }
 
@@ -124,11 +236,15 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
 module.exports = {
     makeArtistsArray,
     makeFixtures,
+    makeEmotionsArray,
+    makeEntriesArray,
     makeTracksArray,
     makeUsersArray,
     cleanTables,
     makeAuthHeader,
     seedUsers,
+    seedEmotions,
+    seedEntries,
     seedArtists,
     seedTracks,
 }

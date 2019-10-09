@@ -8,6 +8,21 @@ const entriesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 entriesRouter
+    .route('/')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const userId = req.user.id
+        EntriesService.getEntries(req.app.get('db'), userId)
+            .then(entries => {
+                if (entries.error) {
+                    return res.status(400).json({error: entries.error})
+                }
+
+                return res.json(entries)
+            })
+    })
+
+entriesRouter
     .route('/new')
     .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
@@ -29,21 +44,6 @@ entriesRouter
                     return res.status(400).json({error: entries.error})
                 }
                 return res.json(entry)
-            })
-    })
-
-entriesRouter
-    .route('/')
-    .all(requireAuth)
-    .get((req, res, next) => {
-        const userId = req.user.id
-        EntriesService.getEntries(req.app.get('db'), userId)
-            .then(entries => {
-                if (entries.error) {
-                    return res.status(400).json({error: entries.error})
-                }
-
-                return res.json(entries)
             })
     })
     
