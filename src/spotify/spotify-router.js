@@ -102,6 +102,30 @@ spotifyRouter
     })
 
 spotifyRouter
+    .route('/demo')
+    .post(jsonBodyParser, (req, res, next) => {
+        const emotions = req.body
+        if (Object.keys(emotions).length === 0) {
+            logger.error(`recommendations post must include emotional data`)
+            return res
+                .status(400)
+                .json({error: {message: 'Recommendations post missing emotional data'}})
+        }
+    
+        SpotifyService.getRecommendations(req.app.get('db'), 1, emotions)
+            .then(tracks => {
+                if (!tracks.length) {
+                    return res
+                        .status(400)
+                        .json({error: {message: 'Tracks not found, please try again'}})
+                }
+                res
+                    .status(200)
+                    .json(tracks)
+            })
+    })
+
+spotifyRouter
     .route('/recommendations')
     .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {

@@ -75,9 +75,6 @@ $ npm run test
 
 
 ## Technologies Used:
-* React
 * Node.js
 * Postgres
-* HTML5
-* CSS3
 * JWT Authentication
